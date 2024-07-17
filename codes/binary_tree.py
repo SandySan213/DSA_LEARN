@@ -91,7 +91,7 @@ def searchBinaryTree(rootNode: Treenode, nodeValue: str | int | float ): # same 
         while not (customQueue.isEmpty()):
             root = customQueue.dequeue()
             if root.value.data == nodeValue:
-                return "Success"
+                return True
             
             if (root.value.leftChild is not None): # O(1)
                 customQueue.enqueue(root.value.leftChild)
@@ -168,6 +168,7 @@ def deleteDeepestNode(rootNode, dNode):
             if root.value is dNode:
                 root.value = None
                 return
+            
             if root.value.rightChild:
                 if root.value.rightChild is dNode:
                     root.value.rightChild = None
