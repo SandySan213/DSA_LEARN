@@ -87,7 +87,7 @@ def searchBinaryTree(rootNode: Treenode, nodeValue: str | int | float ): # same 
     else:
         customQueue = q()
         customQueue.enqueue(rootNode)
-        
+         
         while not (customQueue.isEmpty()):
             root = customQueue.dequeue()
             if root.value.data == nodeValue:
@@ -135,3 +135,86 @@ new_node = Treenode(data='red bull')
 # print(insertBinaryTree(rootNode=newBT, newNode=new_node))
 
 # levelOrderTraversal(rootNode=newBT)
+
+def getDeepestNode(rootNode):
+    if not rootNode:
+        return
+    else:
+        customQueue = q()
+        customQueue.enqueue(rootNode)
+        while not (customQueue.isEmpty()):
+
+            root = customQueue.dequeue()            
+            if (root.value.leftChild is not None): # O(1)
+                customQueue.enqueue(root.value.leftChild)
+            
+            if (root.value.rightChild is not None): # O(1)
+                customQueue.enqueue(root.value.rightChild)
+        deepestNode = root.value
+        return deepestNode
+
+# deppest_node = getDeepestNode(rootNode=newBT)
+# print(deppest_node.data)
+
+
+def deleteDeepestNode(rootNode, dNode):
+    if not rootNode:
+        return
+    else:
+        customQueue = q()
+        customQueue.enqueue(rootNode)
+        while not(customQueue.isEmpty()):
+            root = customQueue.dequeue()
+            if root.value is dNode:
+                root.value = None
+                return
+            if root.value.rightChild:
+                if root.value.rightChild is dNode:
+                    root.value.rightChild = None
+                    return
+                else:
+                    customQueue.enqueue(root.value.rightChild)
+
+            if root.value.leftChild:
+                if root.value.leftChild is dNode:
+                    root.value.leftChild = None
+                    return
+                else:
+                    customQueue.enqueue(root.value.leftChild)
+
+def deleteNodeBT(rootNode, node):
+    if not rootNode:
+        return "BT does not exist"
+    else:
+        customQueue = q()
+        customQueue.enqueue(rootNode)
+        while not (customQueue.isEmpty()):
+            root = customQueue.dequeue()
+            if root.value.data == node:
+                dNode = getDeepestNode(rootNode)
+                root.value.data = dNode.data
+                deleteDeepestNode(rootNode, dNode)
+                return "The node has been succesfully deleted"
+            
+            if (root.value.leftChild is not None): # O(1)
+                customQueue.enqueue(root.value.leftChild)
+            
+            if (root.value.rightChild is not None): # O(1)
+                customQueue.enqueue(root.value.rightChild)
+            
+
+def deleteBT(rootNode):
+    rootNode.data = None
+    rootNode.leftChild = None
+    rootNode.rightChild = None
+    return "BT is deleted!"
+
+deleteBT(newBT)
+levelOrderTraversal(newBT)
+
+# levelOrderTraversal(newBT)
+# print('*' * 100)
+# deepNode = getDeepestNode(newBT)
+# deleteDeepestNode(newBT, deepNode)
+# deleteNodeBT(newBT, 'coffee')
+# levelOrderTraversal(newBT)
