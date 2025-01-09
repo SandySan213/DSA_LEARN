@@ -152,6 +152,14 @@ def deleteNode(rootNode: BSTNode, nodeValue: int):
 
     return rootNode
 
+
+def deleteBST(rootNode: BSTNode):
+    rootNode.data = None
+    rootNode.rightChild = None
+    rootNode.leftChild = None
+
+    return "binary search tree is deleted"
+
 if __name__=='__main__':
 
     #creation of tree
